@@ -9,13 +9,13 @@ import java.io.IOException;
 
 public class YamlService {
     File ConfigFile;
-    public Config loadConfig(){
+    public Config loadConfig(String fileName){
         try{
-            ConfigFile = new File("Config.yaml");
+            ConfigFile = new File(fileName);
             if(ConfigFile.createNewFile()){
-                System.out.println("Config.yaml not present, Creating new one");
+                System.out.println(fileName + " not present, Creating new one");
                 Config config = new Config();
-                SaveConfig(config);
+                SaveConfig(fileName, config);
                 return config;
             }
             else{
@@ -24,20 +24,20 @@ public class YamlService {
             }
         }
         catch (IOException e){
-            FileReadExceptionError(e,"Something bad happened with the Config.yaml");
+            FileReadExceptionError(e,"Something bad happened with the " + fileName);
         }
         return null;
     }
-    public int SaveConfig(Config config){
+    public int SaveConfig(String fileName, Config config){
         try{
-            ConfigFile = new File("Config.yaml");
+            ConfigFile = new File(fileName);
             ObjectMapper om = new ObjectMapper(new YAMLFactory());
             om.writeValue(ConfigFile, config);
-            System.out.println("Config.yaml updated!");
+            System.out.println(fileName + " updated!");
             return 0;
         }
         catch (IOException e){
-            FileReadExceptionError(e,"Something bad happened with the Config.yaml");
+            FileReadExceptionError(e,"Something bad happened with the " + fileName);
             return -1;
         }
     }

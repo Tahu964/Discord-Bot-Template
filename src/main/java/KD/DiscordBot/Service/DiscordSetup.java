@@ -13,7 +13,7 @@ public class DiscordSetup {
     static Config config;
     public void TryDiscordCalls(){
         YamlService yamlService = new YamlService();
-        config = yamlService.loadConfig();
+        config = yamlService.loadConfig("Config.yaml");
         if(config.getBotToken() == null){
             System.out.println("There is no Bot Token Provided!");
             return;
