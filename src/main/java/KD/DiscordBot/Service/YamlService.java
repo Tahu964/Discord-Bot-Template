@@ -6,13 +6,13 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.File;
 import java.io.IOException;
-
+//TODO: For future me, figure out how to make yaml reader take in any class to reduce redundant code
 public class YamlService {
-    File ConfigFile;
+    File File;
     public Config loadConfig(String fileName){
         try{
-            ConfigFile = new File(fileName);
-            if(ConfigFile.createNewFile()){
+            File = new File(fileName);
+            if(File.createNewFile()){
                 System.out.println(fileName + " not present, Creating new one");
                 Config config = new Config();
                 SaveConfig(fileName, config);
@@ -20,7 +20,7 @@ public class YamlService {
             }
             else{
                 ObjectMapper om = new ObjectMapper(new YAMLFactory());
-                return om.readValue(ConfigFile, Config.class);
+                return om.readValue(File, Config.class);
             }
         }
         catch (IOException e){
@@ -28,11 +28,11 @@ public class YamlService {
         }
         return null;
     }
-    public int SaveConfig(String fileName, Config config){
+    public int SaveConfig(String fileName, Object obj){
         try{
-            ConfigFile = new File(fileName);
+            File = new File(fileName);
             ObjectMapper om = new ObjectMapper(new YAMLFactory());
-            om.writeValue(ConfigFile, config);
+            om.writeValue(File, obj);
             System.out.println(fileName + " updated!");
             return 0;
         }
