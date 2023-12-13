@@ -30,7 +30,7 @@ public class DiscordSetup {
     public void DiscordCalls() throws LoginException, InterruptedException {
         jda = JDABuilder.createDefault(config.getBotToken())
                 .addEventListeners(new DiscordListener())
-                .setActivity(Activity.playing("Change me later"))
+                .setActivity(Activity.playing("Bot is now active"))
                 .build();
         jda.awaitReady();
         jda.updateCommands().addCommands(
