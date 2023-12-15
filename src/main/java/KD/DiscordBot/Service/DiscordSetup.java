@@ -4,9 +4,11 @@ import KD.DiscordBot.Model.Config;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import javax.security.auth.login.LoginException;
+import java.util.Timer;
 
 public class DiscordSetup {
     static JDA jda;
@@ -34,8 +36,11 @@ public class DiscordSetup {
                 .build();
         jda.awaitReady();
         jda.updateCommands().addCommands(
-                Commands.slash("test","Sends an example message to the discord server."),
-                Commands.slash("shutdown","Shuts down the bot.")
+                Commands.slash("why","Explains why I made this."),
+                Commands.slash("countdown","Tells you the countdown."),
+                Commands.slash("shutdown","Shuts down the bot if you're me."),
+                Commands.slash("play","A music bot experiment that really doesn't belong here, remove later plz")
+                        .addOption(OptionType.STRING,"link","The URL or File to play", true)
         ).queue();
     }
 }
