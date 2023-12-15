@@ -1,5 +1,6 @@
 package KD.DiscordBot.Service;
 
+import KD.DiscordBot.Commands.*;
 import KD.DiscordBot.Exceptions.ChannelNotFoundException;
 import KD.DiscordBot.LavaPlayer.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -27,31 +28,28 @@ public class DiscordListener extends ListenerAdapter {
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
         switch(event.getName()){
             case "play":
-                Member member = event.getMember();
-                GuildVoiceState voiceState = member.getVoiceState();
-                if(!voiceState.inAudioChannel()){
-                    event.reply("You're not in a voice channel").queue();
-                    break;
-                }
-                Member self = event.getGuild().getSelfMember();
-                GuildVoiceState selfVoiceState = self.getVoiceState();
-                if(!selfVoiceState.inAudioChannel()){
-                    event.getGuild().getAudioManager().openAudioConnection(voiceState.getChannel());
-                } else {
-                    if(selfVoiceState.getChannel() != voiceState.getChannel()){
-                        event.reply("You need to be in a valid voice channel").queue();
-                        break;
-                    }
-                }
-                String name = event.getOption("link").getAsString();
-                try {
-                    new URI(name);
-                } catch (URISyntaxException e) {
-                    name = "ytsearch:" + name;
-                }
-                PlayerManager pm = PlayerManager.get();
-                event.reply("Playing ").queue();
-                pm.play(event.getGuild(), name);
+                Play play = new Play();
+                play.PlayCommand(event);
+                break;
+            case "nowplaying":
+                NowPlaying nowPlaying = new NowPlaying();
+                nowPlaying.NowPlayingCommand(event);
+                break;
+            case "queue":
+                Queue queue = new Queue();
+                queue.QueueCommand(event);
+                break;
+            case "repeat":
+                Repeat repeat = new Repeat();
+                repeat.RepeatCommand(event);
+                break;
+            case "skip":
+                Skip skip = new Skip();
+                skip.SkipCommand(event);
+                break;
+            case "stop":
+                Stop stop = new Stop();
+                stop.StopCommand(event);
                 break;
             case "shutdown":
                 event.reply("Shutdown command called").queue();

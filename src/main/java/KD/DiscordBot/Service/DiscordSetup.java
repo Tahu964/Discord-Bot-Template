@@ -35,8 +35,13 @@ public class DiscordSetup {
                 .build();
         jda.awaitReady();
         jda.updateCommands().addCommands(
-                Commands.slash("play","A music bot experiment that really doesn't belong here, remove later plz")
+                Commands.slash("play","Plays a song given a link")
                         .addOption(OptionType.STRING,"link","The URL or File to play", true),
+                Commands.slash("nowplaying","Shows current playing song"),
+                Commands.slash("queue","Shows the current queue"),
+                Commands.slash("repeat","Turns on repeat"),
+                Commands.slash("skip","Skips the current song"),
+                Commands.slash("stop","Stops the music and clears the queue"),
                 Commands.slash("shutdown","Shuts down the bot.")
         ).queue();
     }

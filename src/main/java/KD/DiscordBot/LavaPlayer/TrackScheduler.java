@@ -8,12 +8,12 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class TrackSchedular extends AudioEventAdapter {
+public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue = new LinkedBlockingQueue<>();
     private boolean isRepeat = false;
 
-    public TrackSchedular(AudioPlayer player){
+    public TrackScheduler(AudioPlayer player){
         this.player = player;
     }
     @Override

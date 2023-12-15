@@ -8,7 +8,6 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Invite;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,19 +39,18 @@ public class PlayerManager {
         audioPlayerManager.loadItemOrdered(guildMusicManager, trackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                guildMusicManager.getTrackSchedular().queue(track);
+                guildMusicManager.getTrackScheduler().queue(track);
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                guildMusicManager.getTrackSchedular().queue(playlist.getTracks().getFirst());
+                guildMusicManager.getTrackScheduler().queue(playlist.getTracks().getFirst());
             }
 
             @Override
             public void noMatches() {
 
             }
-
             @Override
             public void loadFailed(FriendlyException e) {
 
