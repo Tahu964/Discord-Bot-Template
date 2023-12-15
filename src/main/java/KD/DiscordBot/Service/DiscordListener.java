@@ -1,11 +1,17 @@
 package KD.DiscordBot.Service;
 
 import KD.DiscordBot.Exceptions.ChannelNotFoundException;
+import KD.DiscordBot.LavaPlayer.PlayerManager;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.events.session.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class DiscordListener extends ListenerAdapter {
 
@@ -20,9 +26,32 @@ public class DiscordListener extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
         switch(event.getName()){
-            case "test":
-                event.reply("Test command called!").queue();
-                SendDiscordServerMessage("Here is an example message");
+            case "play":
+                Member member = event.getMember();
+                GuildVoiceState voiceState = member.getVoiceState();
+                if(!voiceState.inAudioChannel()){
+                    event.reply("You're not in a voice channel").queue();
+                    break;
+                }
+                Member self = event.getGuild().getSelfMember();
+                GuildVoiceState selfVoiceState = self.getVoiceState();
+                if(!selfVoiceState.inAudioChannel()){
+                    event.getGuild().getAudioManager().openAudioConnection(voiceState.getChannel());
+                } else {
+                    if(selfVoiceState.getChannel() != voiceState.getChannel()){
+                        event.reply("You need to be in a valid voice channel").queue();
+                        break;
+                    }
+                }
+                String name = event.getOption("link").getAsString();
+                try {
+                    new URI(name);
+                } catch (URISyntaxException e) {
+                    name = "ytsearch:" + name;
+                }
+                PlayerManager pm = PlayerManager.get();
+                event.reply("Playing ").queue();
+                pm.play(event.getGuild(), name);
                 break;
             case "shutdown":
                 event.reply("Shutdown command called").queue();
