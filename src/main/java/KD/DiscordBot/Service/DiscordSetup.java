@@ -42,6 +42,7 @@ public class DiscordSetup {
                 Commands.slash("repeat","Turns on repeat"),
                 Commands.slash("skip","Skips the current song"),
                 Commands.slash("stop","Stops the music and clears the queue"),
+                Commands.slash("disconnect","Disconnects the bot from the voice call"),
                 Commands.slash("shutdown","Shuts down the bot.")
         ).queue();
     }

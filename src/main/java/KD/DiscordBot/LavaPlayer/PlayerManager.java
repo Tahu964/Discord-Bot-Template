@@ -8,6 +8,8 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.managers.AudioManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,5 +58,10 @@ public class PlayerManager {
 
             }
         });
+    }
+    public void disconnect(SlashCommandInteractionEvent event){
+        audioPlayerManager.shutdown();
+        AudioManager audioManager = event.getGuild().getAudioManager();
+        audioManager.closeAudioConnection();
     }
 }

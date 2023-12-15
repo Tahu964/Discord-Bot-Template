@@ -51,9 +51,18 @@ public class DiscordListener extends ListenerAdapter {
                 Stop stop = new Stop();
                 stop.StopCommand(event);
                 break;
+            case "disconnect":
+                Disconnect disconnect = new Disconnect();
+                disconnect.DisconnectCommand(event);
+                break;
             case "shutdown":
-                event.reply("Shutdown command called").queue();
-                DiscordSetup.jda.shutdown();
+                if(event.getUser().getId().equals("441682190321844224")){
+                    event.reply("Shutdown command called").queue();
+                    DiscordSetup.jda.shutdown();
+                }
+                else{
+                    event.reply("Um excuse me, what do you think you're doing?").queue();
+                }
                 break;
             default:
                 event.reply("That is not a command. Try again.").queue();

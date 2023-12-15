@@ -34,6 +34,8 @@ public class Disconnect {
         TrackScheduler trackScheduler = guildMusicManager.getTrackScheduler();
         trackScheduler.getQueue().clear();
         trackScheduler.getPlayer().stopTrack();
+        PlayerManager.get().disconnect(event);
+
         event.reply("Disconnected").queue();
     }
 }
